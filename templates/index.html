@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Familieportal</title>
+</head>
+<body>
+    <h1>Velkommen til familieportalen</h1>
+
+    <!-- Meldinger -->
+    <h2>Meldinger</h2>
+    <ul id="message-list">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    <form id="message-form" action="/send_message" method="POST">
+        <input type="text" name="message" required>
+        <input type="submit" value="Legg til melding">
+    </form>
+
+    <!-- Handleliste -->
+    <h2>Handleliste</h2>
+    <ul id="shopping-list">
+        {% for item in shopping_list %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+    <form id="shopping-form" action="/add_item" method="POST">
+        <input type="text" name="item" required>
+        <input type="submit" value="Legg til vare">
+    </form>
+
+    <!-- Oppgaveliste -->
+    <h2>Oppgaver</h2>
+    <ul id="task-list">
+        {% for task in tasks %}
+            <li>{{ task }}</li>
+        {% endfor %}
+    </ul>
+    <form id="task-form" action="/add_task" method="POST">
+        <input type="text" name="task" required>
+        <input type="submit" value="Legg til oppgave">
+    </form>
+
+    <!-- Bildeopplasting -->
+    <h2>Last opp et bilde</h2>
+    <form action="/upload_image" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <input type="submit" value="Last opp">
+    </form>
+
+    <!-- Viser opplastede bilder -->
+    <h2>Opplastede bilder</h2>
+    <ul id="image-list">
+        {% for image in uploaded_images %}
+            <li><img src="{{ url_for('uploaded_file', filename=image) }}" width="200px"></li>
+        {% endfor %}
+    </ul>
+
+    <!-- Socket.IO for sanntidsoppdateringer -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        var socket = io();
+
+        // Lytt etter nye meldinger
+        socket.on('message_update', function(data) {
+            var newMessage = document.createElement('li');
+            newMessage.textContent = data.message;
+            document.getElementById('message-list').appendChild(newMessage);
+        });
+
+        // Lytt etter nye handleliste-elementer
+        socket.on('shopping_update', function(data) {
+            var newItem = document.createElement('li');
+            newItem.textContent = data.item;
+            document.getElementById('shopping-list').appendChild(newItem);
+        });
+
+        // Lytt etter nye oppgaver
+        socket.on('task_update', function(data) {
+            var newTask = document.createElement('li');
+            newTask.textContent = data.task;
+            document.getElementById('task-list').appendChild(newTask);
+        });
+
+        // Lytt etter nye bilder
+        socket.on('image_update', function(data) {
+            var newImage = document.createElement('img');
+            newImage.src = '/uploads/' + data.filename;
+            newImage.width = 200;
+            document.getElementById('image-list').appendChild(newImage);
+        });
+    </script>
+</body>
+</html>

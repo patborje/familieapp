@@ -1,3 +1,5 @@
+# Tvinger Heroku til å bygge på nytt
+
 from flask import Flask, request, render_template, redirect, url_for, send_from_directory
 from flask_socketio import SocketIO, emit
 import os

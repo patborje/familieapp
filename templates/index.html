@@ -3,94 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Familieportal</title>
+    <title>Familieapp</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <h1>Velkommen til familieportalen</h1>
+    <h1>Familieapp Dashboard</h1>
 
-    <!-- Meldinger -->
-    <h2>Meldinger</h2>
-    <ul id="message-list">
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    <form id="message-form" action="/send_message" method="POST">
-        <input type="text" name="message" required>
-        <input type="submit" value="Legg til melding">
-    </form>
+    <div id="messages">
+        <h2>Meldinger</h2>
+        <ul id="message-list">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        <input type="text" id="message-input" placeholder="Skriv en melding...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
 
-    <!-- Handleliste -->
-    <h2>Handleliste</h2>
-    <ul id="shopping-list">
-        {% for item in shopping_list %}
-            <li>{{ item }}</li>
-        {% endfor %}
-    </ul>
-    <form id="shopping-form" action="/add_item" method="POST">
-        <input type="text" name="item" required>
-        <input type="submit" value="Legg til vare">
-    </form>
+    <div id="shopping-list">
+        <h2>Handleliste</h2>
+        <ul id="shopping-list-items">
+            {% for item in shopping_list %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        <input type="text" id="item-input" placeholder="Nytt handlelisteelement...">
+        <button onclick="addItem()">Legg til</button>
+    </div>
 
-    <!-- Oppgaveliste -->
-    <h2>Oppgaver</h2>
-    <ul id="task-list">
-        {% for task in tasks %}
-            <li>{{ task }}</li>
-        {% endfor %}
-    </ul>
-    <form id="task-form" action="/add_task" method="POST">
-        <input type="text" name="task" required>
-        <input type="submit" value="Legg til oppgave">
-    </form>
+    <div id="tasks">
+        <h2>Oppgaveliste</h2>
+        <ul id="task-list">
+            {% for task in tasks %}
+                <li>{{ task }}</li>
+            {% endfor %}
+        </ul>
+        <input type="text" id="task-input" placeholder="Ny oppgave...">
+        <button onclick="addTask()">Legg til</button>
+    </div>
 
-    <!-- Bildeopplasting -->
-    <h2>Last opp et bilde</h2>
-    <form action="/upload_image" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" required>
-        <input type="submit" value="Last opp">
-    </form>
+    <div id="images">
+        <h2>Opplastede Bilder</h2>
+        <ul id="image-list">
+            {% for image in uploaded_images %}
+                <li><img src="{{ url_for('uploaded_file', filename=image) }}" alt="Image"></li>
+            {% endfor %}
+        </ul>
+        <form action="/upload_image" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit">Last opp bilde</button>
+        </form>
+    </div>
 
-    <!-- Viser opplastede bilder -->
-    <h2>Opplastede bilder</h2>
-    <ul id="image-list">
-        {% for image in uploaded_images %}
-            <li><img src="{{ url_for('uploaded_file', filename=image) }}" width="200px"></li>
-        {% endfor %}
-    </ul>
-
-    <!-- Socket.IO for sanntidsoppdateringer -->
-    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script>
         var socket = io();
 
-        // Lytt etter nye meldinger
+        function sendMessage() {
+            var message = document.getElementById('message-input').value;
+            socket.emit('new_message', { message: message });
+        }
+
+        function addItem() {
+            var item = document.getElementById('item-input').value;
+            socket.emit('new_item', { item: item });
+        }
+
+        function addTask() {
+            var task = document.getElementById('task-input').value;
+            socket.emit('new_task', { task: task });
+        }
+
         socket.on('message_update', function(data) {
-            var newMessage = document.createElement('li');
-            newMessage.textContent = data.message;
-            document.getElementById('message-list').appendChild(newMessage);
+            var li = document.createElement('li');
+            li.textContent = data.message;
+            document.getElementById('message-list').appendChild(li);
         });
 
-        // Lytt etter nye handleliste-elementer
         socket.on('shopping_update', function(data) {
-            var newItem = document.createElement('li');
-            newItem.textContent = data.item;
-            document.getElementById('shopping-list').appendChild(newItem);
+            var li = document.createElement('li');
+            li.textContent = data.item;
+            document.getElementById('shopping-list-items').appendChild(li);
         });
 
-        // Lytt etter nye oppgaver
         socket.on('task_update', function(data) {
-            var newTask = document.createElement('li');
-            newTask.textContent = data.task;
-            document.getElementById('task-list').appendChild(newTask);
+            var li = document.createElement('li');
+            li.textContent = data.task;
+            document.getElementById('task-list').appendChild(li);
         });
 
-        // Lytt etter nye bilder
         socket.on('image_update', function(data) {
-            var newImage = document.createElement('img');
-            newImage.src = '/uploads/' + data.filename;
-            newImage.width = 200;
-            document.getElementById('image-list').appendChild(newImage);
+            var li = document.createElement('li');
+            var img = document.createElement('img');
+            img.src = '/uploads/' + data.filename;
+            li.appendChild(img);
+            document.getElementById('image-list').appendChild(li);
         });
     </script>
 </body>

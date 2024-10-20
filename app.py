@@ -1,11 +1,16 @@
 # Tvinger Heroku til å bygge på nytt
-
-from flask import Flask, request, render_template, redirect, url_for, send_from_directory
-from flask_socketio import SocketIO, emit
 import os
+import eventlet
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask_socketio import SocketIO, emit
 
+eventlet.monkey_patch()  # for å sikre riktig patching
+
+# Opprett Flask-applikasjonen
 app = Flask(__name__)
-socketio = SocketIO(app)
+
+# Konfigurer SocketIO til å bruke eventlet
+socketio = SocketIO(app, async_mode='eventlet')
 
 # Mappe for opplastede filer
 UPLOAD_FOLDER = 'static/uploads'
@@ -29,6 +34,11 @@ def allowed_file(filename):
 @app.route('/')
 def index():
     return render_template('index.html', messages=messages, shopping_list=shopping_list, tasks=tasks, uploaded_images=uploaded_images)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 # WebSocket-hendelse for sanntidsoppdatering
 @socketio.on('new_message')
@@ -76,5 +86,6 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 # Start SocketIO-serveren
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+

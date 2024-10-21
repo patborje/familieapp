@@ -1,19 +1,263 @@
-/* style.css */
+/* Generell stil for hele siden */
+body {
+  font-family: 'Raleway', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
 
-/* Enkel styling */
-body { font-family: Arial, sans-serif; }
-#container { display: flex; flex-wrap: wrap; }
-.section { flex: 1; min-width: 300px; margin: 10px; padding: 10px; border: 1px solid #ccc; }
-h2 { margin-top: 0; }
-button { margin-left: 5px; }
+/* Header container stil */
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #fedaff;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-/* Nytt CSS for å flytte knappene til høyre */
+/* Stil for tittel */
+#portal-title {
+  font-family: 'Amatic SC', cursive;
+  font-size: 48px;
+  margin: 0;
+  color: #0f0d0d;
+}
+
+/* Stil for AI-menyforslag */
+#mealSuggestions {
+  font-family: 'Raleway', sans-serif; /* Bruk samme font som resten av siden */
+  font-size: 1rem;
+  color: #333;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  line-height: 1.6; /* For å gjøre teksten mer lesbar */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+/* Stil for rullende RSS-feed */
+.marquee {
+  width: 60%; /* Tilpass bredde etter behov */
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+  background-color: #e8f5e9;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: marquee 80s linear infinite;
+}
+
+.marquee a {
+  margin-right: 50px;
+  text-decoration: none;
+  color: #060606;
+  font-weight: bold;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(100%, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}
+
+/* Stil for hovedcontainer */
+#container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+/* Stil for seksjoner */
+.section {
+  flex: 1;
+  min-width: 300px;
+  margin: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+/* Overskrifter */
+h2 {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  color: #333;
+  margin-top: 0;
+}
+
+/* Knapp og input stil */
+button, input[type="text"] {
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  background-color: #e6a7f5;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #8e808c;
+}
+
+input[type="text"] {
+  width: calc(100% - 20px);
+}
+
+/* CSS for skjermbeskytteren */
+.screensaver {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* Mørk gjennomsiktig bakgrunn */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Sørg for at det ligger på toppen av alt annet */
+  transition: opacity 0.5s ease;
+  opacity: 0;
+  pointer-events: none; /* Hindrer at du kan klikke på det som er bak */
+}
+
+.screensaver.visible {
+  opacity: 1;
+  pointer-events: all; /* Aktivere interaksjon med skjermbeskytteren når den vises */
+}
+
+.hidden {
+  display: none;
+}
+
+.screensaver-content {
+  text-align: center;
+  font-size: 2em;
+}
+
+/* Animasjon for bildet i skjermbeskytteren */
+#floating-image {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  animation: moveAround 10s infinite alternate;
+}
+
+@keyframes moveAround {
+  0% {
+    top: 0;
+    left: 0;
+  }
+  25% {
+    top: 0;
+    left: 80%;
+  }
+  50% {
+    top: 80%;
+    left: 80%;
+  }
+  75% {
+    top: 80%;
+    left: 0;
+  }
+  100% {
+    top: 0;
+    left: 0;
+  }
+}
+
+/* Stil for elementer med knapper på høyre side */
 .item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px;
 }
+
 .item-buttons button {
   margin-left: 5px;
+}
+
+#realtime-busboard {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Enkel responsive layout */
+@media (max-width: 768px) {
+  #container {
+    flex-direction: column;
+  }
+}
+
+/* Stil for Ukens middagsplan */
+#mealPlanSection {
+  margin-top: 20px;
+}
+
+#mealPlan {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+#mealPlan th, #mealPlan td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#mealPlan th {
+  background-color: #e6a7f5;
+  color: white;
+}
+
+#mealPlan td input {
+  width: 100%;
+  padding: 5px;
+  font-size: 14px;
+}
+
+/* Stil for klokken som følger ved scroll */
+#stickyClock {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #e6a7f5;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  padding: 3px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+#clock {
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
 }

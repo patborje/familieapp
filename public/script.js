@@ -1,5 +1,3 @@
-// public/script.js
-
 // Polyfill for Array.prototype.find
 if (!Array.prototype.find) {
   Array.prototype.find = function(predicate) {
@@ -33,6 +31,9 @@ var shoppingListUl = document.getElementById('shoppingList');
 var itemInput = document.getElementById('itemInput');
 var addItemBtn = document.getElementById('addItem');
 
+var aiMenuDiv = document.getElementById('aiMenu');
+var getAiMenuBtn = document.getElementById('getAiMenu');
+
 var messages = [];
 var shoppingList = [];
 var calendarEvents = [];
@@ -46,6 +47,38 @@ socket.on('initialData', function(data) {
   updateShoppingList();
   updateCalendar();
 });
+
+// Add event listener to fetch AI suggestions when the button is clicked
+document.getElementById('fetchAIButton').addEventListener('click', async () => {
+  try {
+    const response = await fetch('/ai-menu'); // Call the AI menu endpoint
+    const data = await response.json(); // Parse the response
+    displayMealSuggestions(data.suggestions); // Call a function to display the meal suggestions
+  } catch (error) {
+    console.error('Error fetching AI suggestions:', error);
+  }
+});
+
+// Function to display the meal suggestions in the UI
+function displayMealSuggestions(suggestions) {
+  const suggestionDiv = document.getElementById('mealSuggestions');
+  suggestionDiv.innerHTML = ''; // Clear existing content
+  
+  const meals = suggestions.split('\n\n'); // Split by double new lines
+   
+  // Legg til en overskrift
+  const header = document.createElement('h2');
+  header.textContent = 'Forslag til ukens meny:';
+  header.style.fontFamily = 'Arial, sans-serif';
+  header.style.color = '#333';
+  suggestionDiv.appendChild(header);
+
+  meals.forEach(meal => {
+    const mealDiv = document.createElement('div');
+    mealDiv.innerHTML = meal.replace(/\n/g, '<br>'); // Replace new lines with <br> for HTML
+    suggestionDiv.appendChild(mealDiv);
+  });
+}
 
 // Oppdatere meldinger
 function updateMessages() {
@@ -243,3 +276,18 @@ function deleteCalendarEvent(id) {
 setInterval(function() {
   socket.emit('requestUpdate');
 }, 10000);
+
+function updateClock() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const timeString = `${hours}:${minutes}:${seconds}`;
+  document.getElementById('clock').textContent = timeString;
+}
+
+// Oppdater klokken hvert sekund
+setInterval(updateClock, 1000);
+
+// Start klokken med en gang siden lastes inn
+window.onload = updateClock;

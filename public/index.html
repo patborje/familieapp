@@ -2,12 +2,31 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Familieportal</title>
   <!-- Link til CSS-filen -->
   <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- Google Fonts for en leken font -->
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Familieportal</h1>
+  <div id="stickyClock">
+    <span id="clock"></span>
+  </div>
+  
+  <!-- Header container for tittel og RSS-feed -->
+  <header id="header">
+    <h1 id="portal-title">Familieportal</h1>
+    <div id="rss-feed" class="marquee">
+      <div class="marquee-content">
+        <!-- Dynamisk innhold fra RSS-feed -->
+      </div>
+    </div>
+  </header>
+
+  
+
+  <!-- Hovedcontainer for innhold -->
   <div id="container">
     <!-- Meldinger seksjon -->
     <div class="section" id="messagesSection">
@@ -16,6 +35,7 @@
       <input type="text" id="messageInput" placeholder="Skriv en melding">
       <button id="sendMessage">Send</button>
     </div>
+    
     <!-- Kalender seksjon -->
     <div class="section" id="calendarSection">
       <h2>Kalender</h2>
@@ -23,12 +43,69 @@
       <input type="text" id="eventInput" placeholder="Legg til hendelse">
       <button id="addEvent">Legg til</button>
     </div>
+
     <!-- Handleliste seksjon -->
     <div class="section" id="shoppingListSection">
       <h2>Handleliste</h2>
       <ul id="shoppingList"></ul>
       <input type="text" id="itemInput" placeholder="Legg til vare">
       <button id="addItem">Legg til</button>
+    </div>
+
+    <!-- Middagsplan seksjon -->
+    <div class="section" id="mealPlanSection">
+      <h2>Ukens Middagsplan</h2>
+      <div>
+        <label for="monday">Mandag:</label>
+        <input type="text" id="monday">
+      </div>
+      <div>
+        <label for="tuesday">Tirsdag:</label>
+        <input type="text" id="tuesday">
+      </div>
+      <div>
+        <label for="wednesday">Onsdag:</label>
+        <input type="text" id="wednesday">
+      </div>
+      <div>
+        <label for="thursday">Torsdag:</label>
+        <input type="text" id="thursday">
+      </div>
+      <div>
+        <label for="friday">Fredag:</label>
+        <input type="text" id="friday">
+      </div>
+      <div>
+        <label for="saturday">Lørdag:</label>
+        <input type="text" id="saturday">
+      </div>
+      <div>
+        <label for="sunday">Søndag:</label>
+        <input type="text" id="sunday">
+      </div>
+      <button id="saveMealPlan">Lagre Middagsplan</button>
+    </div>
+
+    <!-- AI-basert menyforslag seksjon -->
+    <div class="section" id="aiMenuSection">
+      <h2>AI Menyforslag</h2>
+      <div id="aiMenu"></div>
+    </div>
+
+    <button id="fetchAIButton">Hent AI forslag</button>
+<div id="mealSuggestions"></div>
+
+
+    <!-- Sanntidstavle for busstider -->
+    <div class="section" id="realtime-busboard">
+      <h2>Sanntidstavle</h2>
+      <iframe 
+        src="https://mon.ruter.no/departures/59.93292-10.881797" 
+        width="100%" 
+        height="500px" 
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 
@@ -42,4 +119,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-

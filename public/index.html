@@ -3,28 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <title>Familieportal</title>
-  <style>
-    /* Legg til enkel styling her */
-    body { font-family: Arial, sans-serif; }
-    #container { display: flex; }
-    .section { margin: 10px; padding: 10px; border: 1px solid #ccc; }
-  </style>
+  <!-- Link til CSS-filen -->
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <h1>Familieportal</h1>
   <div id="container">
+    <!-- Meldinger seksjon -->
     <div class="section" id="messagesSection">
       <h2>Meldinger</h2>
       <div id="messages"></div>
       <input type="text" id="messageInput" placeholder="Skriv en melding">
       <button id="sendMessage">Send</button>
     </div>
+    <!-- Kalender seksjon -->
     <div class="section" id="calendarSection">
       <h2>Kalender</h2>
       <div id="calendar"></div>
       <input type="text" id="eventInput" placeholder="Legg til hendelse">
       <button id="addEvent">Legg til</button>
     </div>
+    <!-- Handleliste seksjon -->
     <div class="section" id="shoppingListSection">
       <h2>Handleliste</h2>
       <ul id="shoppingList"></ul>
@@ -33,97 +32,14 @@
     </div>
   </div>
 
+  <!-- Polyfills for eldre nettlesere -->
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2/dist/fetch.umd.min.js"></script>
+
+  <!-- Inkluder Socket.IO -->
   <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-
-    // Elementer
-    const messagesDiv = document.getElementById('messages');
-    const messageInput = document.getElementById('messageInput');
-    const sendMessageBtn = document.getElementById('sendMessage');
-
-    const calendarDiv = document.getElementById('calendar');
-    const eventInput = document.getElementById('eventInput');
-    const addEventBtn = document.getElementById('addEvent');
-
-    const shoppingListUl = document.getElementById('shoppingList');
-    const itemInput = document.getElementById('itemInput');
-    const addItemBtn = document.getElementById('addItem');
-
-    let messages = [];
-    let shoppingList = [];
-    let calendarEvents = [];
-
-    // Motta initial data
-    socket.on('initialData', (data) => {
-      messages = data.messages;
-      shoppingList = data.shoppingList;
-      calendarEvents = data.calendarEvents;
-      updateMessages();
-      updateShoppingList();
-      updateCalendar();
-    });
-
-    // Oppdatere meldinger
-    function updateMessages() {
-      messagesDiv.innerHTML = messages.map(msg => `<p>${msg}</p>`).join('');
-    }
-
-    socket.on('updateMessages', (msgs) => {
-      messages = msgs;
-      updateMessages();
-    });
-
-    sendMessageBtn.addEventListener('click', () => {
-      const msg = messageInput.value;
-      if (msg) {
-        socket.emit('newMessage', msg);
-        messageInput.value = '';
-      }
-    });
-
-    // Oppdatere handleliste
-    function updateShoppingList() {
-      shoppingListUl.innerHTML = shoppingList.map(item => `<li>${item}</li>`).join('');
-    }
-
-    socket.on('updateShoppingList', (list) => {
-      shoppingList = list;
-      updateShoppingList();
-    });
-
-    addItemBtn.addEventListener('click', () => {
-      const item = itemInput.value;
-      if (item) {
-        shoppingList.push(item);
-        socket.emit('updateShoppingList', shoppingList);
-        itemInput.value = '';
-      }
-    });
-
-    // Oppdatere kalender
-    function updateCalendar() {
-      calendarDiv.innerHTML = calendarEvents.map(event => `<p>${event}</p>`).join('');
-    }
-
-    socket.on('updateCalendar', (events) => {
-      calendarEvents = events;
-      updateCalendar();
-    });
-
-    addEventBtn.addEventListener('click', () => {
-      const event = eventInput.value;
-      if (event) {
-        calendarEvents.push(event);
-        socket.emit('updateCalendar', calendarEvents);
-        eventInput.value = '';
-      }
-    });
-
-    // Automatisk oppdatering hvert 10. sekund
-    setInterval(() => {
-      socket.emit('requestUpdate');
-    }, 10000);
-  </script>
+  <!-- Inkluder skriptet ditt -->
+  <script src="script.js"></script>
 </body>
 </html>
+

@@ -1,6 +1,6 @@
 // server.js
-
-require('dotenv').config(); // Dette må være aller øverst
+console.log('Nåværende arbeidskatalog:', process.cwd());
+require('dotenv').config({ path: __dirname + '/.env' });
 console.log('MONGODB_URI:', process.env.MONGODB_URI); // For å sjekke at variabelen er lastet
 
 const express = require('express');

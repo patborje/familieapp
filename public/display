@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Familieportal</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header Section with Clock -->
+    <header id="header">
+        <div id="clock"></div>
+        <div id="date"></div>
+    </header>
+
+    <!-- Main container for content -->
+    <div id="main-container">
+        <!-- Upcoming Calendar Events Section -->
+        <section id="calendar-section">
+            <h2>Kalender</h2>
+            <div id="upcoming-events">
+                <!-- Calendar events will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- News Feed Section -->
+        <section id="news-section">
+            <h2>Nyheter</h2>
+            <div id="news-feed">
+                <!-- News items from RSS feed will be inserted here -->
+            </div>
+        </section>
+
+        <!-- Real-Time Ruter Information Section -->
+        <section id="ruter-section">
+            <h2>Sanntid Ruter</h2>
+            <div id="ruter-info">
+                <!-- Ruter real-time information will be inserted here -->
+                <iframe 
+                    src="https://mon.ruter.no/departures/59.93292-10.881797" 
+                    width="100%" 
+                    height="300px" 
+                    frameborder="0" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript for clock, fetching calendar, news, and ruter data -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 /* Generell stil for hele siden */
 body {
   font-family: 'Raleway', sans-serif;
-  background-color: #f9f9f9;
+  background-color: #000000;
   margin: 0;
   padding: 0;
 }
@@ -28,7 +28,9 @@ body {
 
 /* Stil for AI-menyforslag */
 #mealSuggestions {
-  font-family: 'Raleway', sans-serif; /* Bruk samme font som resten av siden */
+  font-family: "Agdasima", sans-serif; /* Bruk samme font som resten av siden */
+  font-weight: 700;
+  font-style: normal;
   font-size: 1rem;
   color: #333;
   padding: 10px;
@@ -37,12 +39,12 @@ body {
   border-radius: 8px;
   line-height: 1.6; /* For å gjøre teksten mer lesbar */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ddd;
+  border: 1px solid #0c0c0c;
 }
 
 /* Stil for rullende RSS-feed */
 .marquee {
-  width: 60%; /* Tilpass bredde etter behov */
+  width: 66%; /* Tilpass bredde etter behov */
   overflow: hidden;
   white-space: nowrap;
   box-sizing: border-box;
@@ -60,7 +62,7 @@ body {
   margin-right: 50px;
   text-decoration: none;
   color: #060606;
-  font-weight: bold;
+  font-weight: 300;
 }
 
 @keyframes marquee {
@@ -85,7 +87,7 @@ body {
   min-width: 300px;
   margin: 10px;
   padding: 20px;
-  background-color: #fff;
+  background-color: #181717;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
@@ -163,6 +165,42 @@ input[type="text"] {
   height: 150px;
   animation: moveAround 10s infinite alternate;
 }
+
+/* Stil for rullende RSS-feed */
+#rss-marquee {
+    width: 100%; /* Full bredde */
+    overflow: hidden; /* Skjul tekst som går utenfor rammen */
+    white-space: nowrap; /* Sørg for at teksten ikke bryter linjer */
+    box-sizing: border-box;
+    background-color: #f0f0f0; /* Bakgrunnsfarge for rullende tekst */
+    padding: 30px;
+    border-bottom: 1px solid #ddd;
+    margin-top: 20px; 
+}
+
+
+.marquee-content {
+    display: inline-block;
+    animation: marquee 140s linear infinite; /* Animasjon som ruller teksten */
+}
+
+.marquee-content a {
+    margin-right: 50px; /* Avstand mellom lenker */
+    text-decoration: none;
+    color: #ffffff; /* Farge på teksten */
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translate(100%, 0); /* Start utenfor til høyre */
+    }
+    100% {
+        transform: translate(-100%, 0); /* Slutt utenfor til venstre */
+    }
+}
+
 
 @keyframes moveAround {
   0% {
@@ -260,4 +298,106 @@ input[type="text"] {
 #clock {
   font-family: 'Raleway', sans-serif;
   font-weight: bold;
+}
+
+/* Generell stil for hele siden */
+body {
+  font-family: 'Raleway', sans-serif;
+  background-color: #0f0f0f;
+  margin: 0;
+  padding: 0;
+}
+
+#header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #3b3b3b;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+#clock {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+#date {
+  font-size: 1.2rem;
+  margin-top: 5px;
+}
+
+#main-container {
+  margin-top: 120px; /* Create space for the fixed header */
+  padding: 20px;
+}
+
+/* Calendar Section */
+#calendar-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+#upcoming-events .event {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-left: 4px solid #3498db;
+  background-color: #fafafa;
+}
+
+#upcoming-events .event h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+#upcoming-events .event p {
+  margin: 5px 0;
+  color: #555;
+}
+
+/* News Section */
+#news-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+#news-feed .news-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+#news-feed .news-item a {
+  text-decoration: none;
+  color: #3498db;
+  font-weight: 600;
+}
+
+/* Ruter Section */
+#ruter-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+iframe {
+  border-radius: 10px;
+}
+
+/* Responsiv stil for iPad */
+@media (max-width: 768px) {
+  #main-container {
+      padding: 10px;
+  }
 }

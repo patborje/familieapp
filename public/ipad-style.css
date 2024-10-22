@@ -1,0 +1,222 @@
+
+
+#body {
+ font-family: "Bebas Neue", sans-serif;
+ font-weight: 300;
+  font-style: normal;
+  background-color: #000000;
+  margin: 1px;
+  padding: 20px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-gap: 20px;
+  height: 90vh;
+  overflow: hidden;
+}
+
+
+/* Header for klokke og dato */
+#header {
+  grid-row: 1 / 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+#clock {
+  font-size: 3.0rem;
+  font-weight: 300;
+  color: #000000;
+}
+
+#date {
+  font-size: 3.0rem;
+  color: #ffffff;
+}
+
+/* Hovedcontainer med widgets */
+#main-container {
+  grid-row: 2 / 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 20px;
+  padding-bottom: 20px;
+  height: calc(100vh - 97px); /* Example height */
+  box-shadow: 6px 6px 12px rgba(247, 244, 244, 0.2), -6px -6px 12px rgba(119, 118, 118, 0.6); /* 3D effect */
+  overflow-y: hidden; /* Enable scrolling */
+}
+
+/* Widget-stil for alle seksjoner */
+section {
+  background: linear-gradient(145deg, #3e83c0, #b5c3e3);
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 6px 6px 12px rgba(240, 236, 236, 0.1), -6px -6px 12px rgba(117, 115, 115, 0.5);
+  overflow: auto;
+  height: 97%;
+  font-size: 3.0rem;
+}
+
+/* Widget-overskrifter */
+section h2 {
+  font-size: 2.0rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+  color: #faf9f8;
+}
+
+/* Seksjon for kommende hendelser */
+#calendar-section {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  background: linear-gradient(145deg, #ffffff, #f0f4ff);
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1), -6px -6px 12px rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  font-size: 2.0rem; 
+  font-family: "Bebas Neue", sans-serif; 
+  font-weight: 300;
+  font-style: normal;
+
+
+}
+
+.calendar-day {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #eef3fc;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.6);
+  display: inline-block;
+  text-align: center;
+  line-height: 40px;
+  font-size: 3.0rem;
+}
+
+.calendar-day:hover {
+  background-color: #000000;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1), -2px -2px 4px rgba(255, 255, 255, 0.3);
+}
+
+/* RSS Nyhetsseksjon */
+#news-section {
+  grid-column: 2 / 4;
+  grid-row: 1 / 2;
+}
+
+#news-feed {
+  height: 100%;
+  overflow-y: auto;
+}
+
+#news-feed .news-item {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+#news-feed .news-item a {
+  text-decoration: none;
+  color: #007BFF;
+}
+
+#news-feed .news-item a:hover {
+  text-decoration: underline;
+}
+
+/* Sanntidstavle for ruter */
+#ruter-section {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Legg til meldinger seksjon */
+#messages-section {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+#messages {
+  height: 100%;
+  overflow-y: auto;
+  font-size: 3.0rem;
+}
+
+#messages .message {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-size: 3.0rem;
+} 
+
+/* Handleliste seksjon */
+#shoppingList-section {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+
+#shoppingList {
+  height: 100%;
+  overflow-y: auto;
+}
+
+#shoppingList li {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 3.0rem;
+}
+
+/* Rullende tekststil for RSS-feed */
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #020202;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 2.2rem;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: marquee 120s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.marquee a {
+  margin-right: 50px;
+  text-decoration: none; /* Corrected text-decoration */
+  color: #ffffff;
+  font-weight: 300;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1024px) {
+  #main-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-gap: 10px;
+  }
+}
+
+
+

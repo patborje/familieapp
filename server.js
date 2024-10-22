@@ -44,6 +44,11 @@ app.use(express.json());
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Route to serve iPad view HTML
+app.get('/ipad-view', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'ipad-view.html'));
+});
+
 // Handle RSS feed route
 app.get('/rss', async (req, res) => {
   try {
@@ -82,6 +87,20 @@ async function getGroqChatCompletion(meals) {
     throw new Error('Could not fetch AI menu suggestions.');
   }
 }
+app.get('/rss', async (req, res) => {
+    try {
+      const feed = await rssParser.parseURL('https://www.nrk.no/nyheter/siste.rss');
+      const items = feed.items.map(item => ({
+        title: item.title,
+        link: item.link,
+      }));
+      res.json(items);
+    } catch (error) {
+      console.error('Feil ved henting av RSS-feed:', error);
+      res.status(500).send('Kunne ikke hente RSS-feed');
+    }
+  });
+  
 
 // Route to get AI-generated menu suggestions on Fridays
 app.get('/ai-menu', async (req, res) => {
@@ -190,7 +209,6 @@ io.on('connection', async (socket) => {
     console.log('En bruker koblet fra');
   });
 });
-
 
 // Start server
 const PORT = process.env.PORT || 3000;

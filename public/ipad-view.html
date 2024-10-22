@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Familieportal iPad View</title>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="ipad-style.css">
+</head>
+<body>
+
+    <!-- Header for klokke og dato -->
+<header id="header">
+    <div id="clock"></div>
+    <div id="date"></div>
+</header>
+
+   <!-- Hovedcontainer for innhold -->
+    <div id="main-container">
+        
+        <!-- Meldingsseksjon -->
+        <section id="messagesSection">
+            <h2>Meldinger</h2>
+            <div id="messages"></div>
+        </section>
+
+        <!-- Kalenderseksjon -->
+        <section id="calendarSection">
+            <h2>Kommende hendelser</h2>
+            <div id="upcoming-events"></div>
+        </section>
+
+        <!-- Handleliste seksjon -->
+        <section id="shoppingListSection">
+            <h2>Handleliste</h2>
+            <ul id="shoppingList"></ul>
+        </section>
+
+        <!-- Ukens Middagsplan seksjon -->
+        <section id="mealPlanSection">
+            <h2>Ukens Middagsplan</h2>
+            <div id="mealSuggestions"></div>
+        </section>
+
+        <!-- Nyhetsseksjon -->
+        <section id="newsSection">
+            <h2>Nyheter</h2>
+            <div class="marquee">
+                <div class="marquee-content" id="rss-content">
+                    <!-- News items will be dynamically added here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sanntidstavle for buss -->
+        <section id="ruterSection">
+            <h2></h2>
+            <iframe src="https://mon.ruter.no/departures/59.93292-10.881797" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>
+        </section>
+        
+    </div>
+
+    <!-- Inkluder Socket.IO -->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Inkluder din JavaScript-fil -->
+    <script src="ipad-script.js"></script>
+
+</body>
+</html>
